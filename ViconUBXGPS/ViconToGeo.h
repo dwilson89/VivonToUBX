@@ -33,7 +33,7 @@
 
 using namespace std;
 
-using namespace UnmanViconWrap;
+//using namespace UnmanViconWrap;
 
 //using namespace GeographicLib;
 
@@ -67,9 +67,9 @@ private:
 	List<UAVData^>^ uavs;
 	int numUAV;
 
-	//ViconUnman^ viconConnect;
+	ViconUnman * viconConnect;
 	
-	UnmanViconWrap::Class1 viconConnect;
+	//UnmanViconWrap::Class1 viconConnect;
 
 public:
 	ViconToGeo(int numUav);

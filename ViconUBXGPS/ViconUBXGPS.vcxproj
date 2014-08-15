@@ -78,9 +78,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="UnmanViconWrap">
-      <HintPath>..\Release\UnmanViconWrap.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyForm.cpp" />

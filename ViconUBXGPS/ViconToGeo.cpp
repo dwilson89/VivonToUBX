@@ -220,15 +220,15 @@ void ViconToGeo::GetandAssignViconData(){
 
 	double x, y, z, pitch, roll, yaw;
 
-	viconConnect.GetNewFrame();
+	//viconConnect.GetNewFrame();
 
-	//viconConnect->GetNewFrame();
+	viconConnect->GetNewFrame();
 
 	for(int i = 0; i < numUAV; i++){
 
-		//viconConnect->GetSubjectInformation(i,x,y,z,pitch,roll,yaw);
+		viconConnect->GetSubjectInformation(i,x,y,z,pitch,roll,yaw);
 
-		viconConnect.GetSubjectInformation(i,x,y,z,pitch,roll,yaw);
+		//viconConnect.GetSubjectInformation(i,x,y,z,pitch,roll,yaw);
 
 		uavs[i]->SetAll(x,y,z,pitch,roll,yaw);
 
@@ -239,17 +239,17 @@ void ViconToGeo::ConnectToVicon(std::string hostName){
 
 	char *hostN = new char[hostName.length() + 1];
 	strcpy(hostN, hostName.c_str());
-	//viconConnect = new ViconUnman(hostName);
-	//viconConnect->ViconConnect();
-	viconConnect.SetDefaultValues(hostN);
+	viconConnect = new ViconUnman(hostName);
+	viconConnect->ViconConnect();
+	//viconConnect.SetDefaultValues(hostN);
 
-	viconConnect.ViconConnect();
+	//viconConnect.ViconConnect();
 }
 
 void ViconToGeo::DisconnectFromVicon(){
 	
-	//viconConnect->ViconDisconnect();
-	viconConnect.ViconDisconnect();
+	viconConnect->ViconDisconnect();
+	//viconConnect.ViconDisconnect();
 }
 
 
