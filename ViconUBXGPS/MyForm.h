@@ -37,6 +37,9 @@ namespace ViconUBXGPS {
 			{
 				comboBox2->Items->Add(s);
 			}
+
+			textBox1->Text = "131.181.87.177:801";
+
 			button1->Enabled = false;
 			button2->Enabled = false;
 			Thread^ testThread = gcnew Thread(gcnew ThreadStart(this, &MyForm::MainLoop));
@@ -55,6 +58,7 @@ namespace ViconUBXGPS {
 	private: System::Windows::Forms::TextBox^  textBox1;
 	public: 
 	private: System::Windows::Forms::Label^  label7;
+	private: System::Windows::Forms::Button^  button6;
 
 		int uavNum;
 
@@ -90,24 +94,24 @@ namespace ViconUBXGPS {
 
 						s = gcnew System::String("");
 					
-						message = sw->Read();
+						//message = sw->Read();
 						
-						if ((message != nullptr) && (message->Length > 0)){
+						//if ((message != nullptr) && (message->Length > 0)){
 							//Console::WriteLine("Message:" + message);
-						}
+						//}
 
 						//Update textboxes with new data
 						if (this->IsHandleCreated && this->InvokeRequired){
 							textBOne += convertedData->GetSentMessage();
 							Invoke(gcnew MethodInvoker(this, &MyForm::UpdateTextBox1));
-							textBTwo += message;
-							Invoke(gcnew MethodInvoker(this, &MyForm::UpdateTextBox2));
+							//textBTwo += message;
+							//Invoke(gcnew MethodInvoker(this, &MyForm::UpdateTextBox2));
 							textBThree += convertedData->GetStringRep();
 							Invoke(gcnew MethodInvoker(this, &MyForm::UpdateTextBox3));
 						}
 					}
 				}
-				Sleep(200);
+				//Sleep(200);
 
 			}
 			std::terminate();
@@ -174,6 +178,7 @@ namespace ViconUBXGPS {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->richTextBox1 = (gcnew System::Windows::Forms::RichTextBox());
@@ -193,6 +198,7 @@ namespace ViconUBXGPS {
 			this->button5 = (gcnew System::Windows::Forms::Button());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->label7 = (gcnew System::Windows::Forms::Label());
+			this->button6 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -227,7 +233,7 @@ namespace ViconUBXGPS {
 			// 
 			// button3
 			// 
-			this->button3->Location = System::Drawing::Point(26, 244);
+			this->button3->Location = System::Drawing::Point(26, 241);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(75, 23);
 			this->button3->TabIndex = 3;
@@ -371,11 +377,22 @@ namespace ViconUBXGPS {
 			this->label7->TabIndex = 19;
 			this->label7->Text = L"Vicon Address";
 			// 
+			// button6
+			// 
+			this->button6->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"button6.Image")));
+			this->button6->Location = System::Drawing::Point(126, 241);
+			this->button6->Name = L"button6";
+			this->button6->Size = System::Drawing::Size(24, 23);
+			this->button6->TabIndex = 20;
+			this->button6->UseVisualStyleBackColor = true;
+			this->button6->Click += gcnew System::EventHandler(this, &MyForm::button6_Click);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(838, 349);
+			this->Controls->Add(this->button6);
 			this->Controls->Add(this->label7);
 			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->button5);
@@ -486,8 +503,22 @@ namespace ViconUBXGPS {
 
 		System::Void button5_Click(System::Object^  sender, System::EventArgs^  e) {
 			terminateLoop = true;
+			std::terminate();
 			Application::Exit();
 		}
+		
+		System::Void button6_Click(System::Object^  sender, System::EventArgs^  e) {
+			
+			comboBox2->Items->Clear();
+			
+			for each (System::String^ s in SerialPort::GetPortNames())
+			{
+
+				
+
+				comboBox2->Items->Add(s);
+			}
+		 }
 };
 }
 

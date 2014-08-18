@@ -20,7 +20,7 @@
 
 #define MAX_MAVLINK_LENGTH 263
 #define CMD_ID_VICON_DATA 104
-#define PAY_LEN_VICON_DATA 255
+#define PAY_LEN_VICON_DATA 32
 #define X25_INIT_CRC 0xFFFF // this may work unsure
 //end snippet
 

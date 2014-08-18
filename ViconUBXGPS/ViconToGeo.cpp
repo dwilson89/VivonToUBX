@@ -46,6 +46,9 @@ System::String^ ViconToGeo::ToPayload(int uavIndex){
 	roll = uavs[uavIndex]->GetRoll();
 	yaw = uavs[uavIndex]->GetYaw();
 
+
+
+
 	//should possibly work - not sure if i would need to place this esle where
 	time_t ltime;
     time(&ltime);
@@ -94,8 +97,7 @@ System::String^ ViconToGeo::ToPayload(int uavIndex){
 void ViconToGeo::SendPayload(int uavIndex, SerialWriter^ sw){
 	
 	System::String^ tempMessage;
-	StringComparer^ stringComparer = StringComparer::OrdinalIgnoreCase;
-
+	
 	msgBuff_t outMsg;
 
 	float x, y, z;
@@ -134,31 +136,27 @@ void ViconToGeo::SendPayload(int uavIndex, SerialWriter^ sw){
 	
 				
 	std::string test = "";
+	
 	compileMessage(outMsg, timestamp, x, y, z, roll, pitch, yaw);
 
-
 	sw->Send(outMsg.inputs, outMsg.byteCount);
+
+	cout << "message sent\n";
 
 	std::string mavlinkStr ="";
 
 	char buff[10];
 
+	
+	//put this else where
 	for(int i=0;i<outMsg.byteCount;i++)	{
+		
 		unsigned char c = outMsg.inputs[i];
 		
 		sprintf(buff, "%02X ", c);
 		mavlinkStr += buff;
 
 	}
-
-	//cout << (mavlinkStr);
-
-	//std::string test = outMsg.inputs;
-	
-	//std::string test = reinterpret_cast<unsigned char*>(outMsg.inputs);
-	
-	//std::string test(outMsg.inputs,outMsg.inputs + outMsg.byteCount);
-
 
 	tempMessage = gcnew System::String(mavlinkStr.c_str());
 
@@ -301,19 +299,20 @@ void ViconToGeo::DisconnectFromVicon(){
 //	}
 //
 //}
+
 void ViconToGeo::compileMessage(msgBuff_t &msg, unsigned long long time, float x, float y, float z, float r, float p, float q)
 {
 	unsigned int crcTemp = 0;
-	msg.byteCount = 40;													//6+32+2
+	msg.byteCount = 40;													//6+32+2 - 32
 
 	//Header
 	msg.inputs[0] = 0xFE;												//Header
-	msg.inputs[1] = PAY_LEN_VICON_DATA;								//Payload Length
+	msg.inputs[1] = PAY_LEN_VICON_DATA;									//Payload Length
 	msg.inputs[2] = 0x00;												//Sequence - THIS WILL NEED TO BE DYNAMICALLY CHANGED I THINK
 	msg.inputs[3] = 0xFF;												//System ID
 	msg.inputs[4] = 0x00;												//Component ID
 	msg.inputs[5] = CMD_ID_VICON_DATA;									//Packet ID
-	
+
 	//Payload
 	packVariableUint64(msg, time, 0);									//0 for the 0th position in the payload
 	packVariableFloat(msg,x,8);											//This layout is only for VICON_POSITION_ESTIMATE

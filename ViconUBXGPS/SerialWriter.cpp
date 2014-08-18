@@ -17,8 +17,8 @@ SerialWriter::SerialWriter(String^ portName, int baudRate)
     //_serialPort->Handshake = (Handshake)Enum::Parse(Handshake::typeid, "None");
 
     // Set the read/write timeouts
-    _serialPort->ReadTimeout = 500;
-    _serialPort->WriteTimeout = 500;
+    _serialPort->ReadTimeout = 200;
+    _serialPort->WriteTimeout = 200;
 	Open();
 }
 
