@@ -54,7 +54,7 @@ struct msgBuff_t 														//Temporary Storage While Reading Messages
 		unsigned char inputs[MAX_MAVLINK_LENGTH];							//Large enough to hold a full Mavlink message
 };
 
-const float MEASURED_ROOM_ROTATION = 0; // this needs to be changed
+const float MEASURED_ROOM_ROTATION = M_PI; // this needs to be changed
 
 #pragma once
 ref class ViconToGeo
