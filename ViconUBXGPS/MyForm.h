@@ -416,6 +416,7 @@ namespace ViconUBXGPS {
 			this->Controls->Add(this->button1);
 			this->Name = L"MyForm";
 			this->Text = L" ";
+			this->FormClosed += gcnew System::Windows::Forms::FormClosedEventHandler(this, &MyForm::MyForm_FormClosed);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
@@ -506,8 +507,13 @@ namespace ViconUBXGPS {
 
 		System::Void button5_Click(System::Object^  sender, System::EventArgs^  e) {
 			terminateLoop = true;
-			std::terminate();
+			//std::terminate();
+			
+			//this->Close();
 			Application::Exit();
+			
+			
+			
 		}
 		
 		System::Void button6_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -521,6 +527,11 @@ namespace ViconUBXGPS {
 
 				comboBox2->Items->Add(s);
 			}
+		 }
+private: System::Void MyForm_FormClosed(System::Object^  sender, System::Windows::Forms::FormClosedEventArgs^  e) {
+		
+			 Application::Exit();
+			exit(0);
 		 }
 };
 }
